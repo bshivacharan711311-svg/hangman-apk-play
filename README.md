@@ -1,73 +1,113 @@
-# Welcome to your Lovable project
+# 🎮 Hangman Game
 
-## Project info
+A beautiful, mobile-first word guessing game built with React, TypeScript, and Vite. Features Progressive Web App (PWA) capabilities for installation on mobile devices.
 
-**URL**: https://lovable.dev/projects/473fde42-e5ac-4e9a-bdd5-47bf6fc69e0d
+## ✨ Features
 
-## How can I edit this code?
+- **Home Screen**: Welcome screen with play button and instructions
+- **Interactive Gameplay**: 
+  - Virtual keyboard for letter selection
+  - Progressive hangman illustration
+  - Real-time word reveal
+  - 6 chances to guess
+- **Result Screens**: Win/lose screens with replay option
+- **PWA Support**: Install as a native app on Android and iOS
+- **Responsive Design**: Beautiful on all screen sizes
+- **Offline Play**: Works without internet connection once installed
 
-There are several ways of editing your application.
+## 🚀 Getting Started
 
-**Use Lovable**
+### Development
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/473fde42-e5ac-4e9a-bdd5-47bf6fc69e0d) and start prompting.
+```bash
+# Install dependencies
+npm install
 
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+### Building for Production
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+# Build the app
+npm run build
 
-**Use GitHub Codespaces**
+# Preview production build
+npm run preview
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 📱 Installing as Mobile App
 
-## What technologies are used for this project?
+### Android
 
-This project is built with:
+1. **Option 1: Install from Browser (PWA)**
+   - Open the app in Chrome/Edge on your Android device
+   - Tap the menu (⋮) and select "Install app" or "Add to Home Screen"
+   - The app will be installed and appear in your app drawer
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+2. **Option 2: Generate APK**
+   - Use [PWA Builder](https://www.pwabuilder.com/) to generate an APK
+   - Upload your deployed app URL
+   - Download the Android package
+   - Install on your device
 
-## How can I deploy this project?
+### iOS (iPhone/iPad)
 
-Simply open [Lovable](https://lovable.dev/projects/473fde42-e5ac-4e9a-bdd5-47bf6fc69e0d) and click on Share -> Publish.
+1. Open the app in Safari
+2. Tap the Share button (□ with arrow)
+3. Scroll and tap "Add to Home Screen"
+4. The app will appear on your home screen like a native app
 
-## Can I connect a custom domain to my Lovable project?
+## 🎯 How to Play
 
-Yes, you can!
+1. Tap **Start Playing** on the home screen
+2. Guess letters by tapping the keyboard buttons
+3. Correct letters reveal in the word
+4. Wrong guesses add to the hangman figure
+5. Win by guessing the word before 6 wrong guesses
+6. Tap **Play Again** to start a new game
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## 🛠️ Tech Stack
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+- **React 18** - UI framework
+- **TypeScript** - Type safety
+- **Vite** - Build tool and dev server
+- **Tailwind CSS** - Styling
+- **Shadcn/UI** - UI components
+- **Vite PWA Plugin** - Progressive Web App features
+- **React Router** - Navigation
+
+## 📂 Project Structure
+
+```
+src/
+├── components/
+│   ├── game/
+│   │   ├── HomeScreen.tsx      # Home screen component
+│   │   ├── GameScreen.tsx      # Main game logic
+│   │   ├── HangmanSVG.tsx      # Hangman illustration
+│   │   └── ResultModal.tsx     # Win/lose modal
+│   └── ui/                     # Shadcn UI components
+├── pages/
+│   └── Index.tsx               # Main page
+├── App.tsx                     # App setup
+└── index.css                   # Global styles & design system
+```
+
+## 🎨 Design System
+
+The app uses a colorful, kid-friendly design with:
+- **Primary**: Bright teal (#1eb8b8)
+- **Secondary**: Warm orange
+- **Accent**: Sunny yellow
+- **Smooth animations** and bounce effects
+- **Large touch targets** for mobile
+
+## 📝 License
+
+This project is built with [Lovable](https://lovable.dev/)
+
+---
+
+Made with ❤️ using Lovable
