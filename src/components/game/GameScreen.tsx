@@ -4,11 +4,27 @@ import { HangmanSVG } from "./HangmanSVG";
 import { ResultModal } from "./ResultModal";
 import { Home } from "lucide-react";
 
-const WORDS = [
-  "ELEPHANT", "GIRAFFE", "BUTTERFLY", "RAINBOW", "COMPUTER",
-  "MOUNTAIN", "TREASURE", "ADVENTURE", "CHOCOLATE", "BIRTHDAY",
-  "HAPPINESS", "UMBRELLA", "DINOSAUR", "SUNSHINE", "PLAYGROUND",
-  "FRIENDSHIP", "VACATION", "CELEBRATION", "IMAGINATION", "WONDERFUL"
+const WORDS_WITH_HINTS = [
+  { word: "ELEPHANT", hint: "Large animal with a trunk" },
+  { word: "GIRAFFE", hint: "Tall animal with a long neck" },
+  { word: "BUTTERFLY", hint: "Colorful flying insect" },
+  { word: "RAINBOW", hint: "Appears in the sky after rain" },
+  { word: "COMPUTER", hint: "Electronic device for work and games" },
+  { word: "MOUNTAIN", hint: "Very tall natural landform" },
+  { word: "TREASURE", hint: "Hidden valuable items" },
+  { word: "ADVENTURE", hint: "Exciting journey or experience" },
+  { word: "CHOCOLATE", hint: "Sweet treat loved by many" },
+  { word: "BIRTHDAY", hint: "Annual celebration of your birth" },
+  { word: "HAPPINESS", hint: "Feeling of joy and contentment" },
+  { word: "UMBRELLA", hint: "Keeps you dry in the rain" },
+  { word: "DINOSAUR", hint: "Extinct prehistoric creature" },
+  { word: "SUNSHINE", hint: "Bright light from the sun" },
+  { word: "PLAYGROUND", hint: "Place where children play" },
+  { word: "FRIENDSHIP", hint: "Close bond between people" },
+  { word: "VACATION", hint: "Time off for travel and rest" },
+  { word: "CELEBRATION", hint: "Party or special event" },
+  { word: "IMAGINATION", hint: "Creative thinking ability" },
+  { word: "WONDERFUL", hint: "Extremely good or amazing" }
 ];
 
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
@@ -19,6 +35,7 @@ interface GameScreenProps {
 
 export const GameScreen = ({ onHomeClick }: GameScreenProps) => {
   const [word, setWord] = useState("");
+  const [hint, setHint] = useState("");
   const [guessedLetters, setGuessedLetters] = useState<Set<string>>(new Set());
   const [wrongGuesses, setWrongGuesses] = useState(0);
   const [gameStatus, setGameStatus] = useState<"playing" | "won" | "lost">("playing");
@@ -44,8 +61,9 @@ export const GameScreen = ({ onHomeClick }: GameScreenProps) => {
   }, [guessedLetters, wrongGuesses, word, gameStatus]);
 
   const startNewGame = () => {
-    const randomWord = WORDS[Math.floor(Math.random() * WORDS.length)];
-    setWord(randomWord);
+    const randomEntry = WORDS_WITH_HINTS[Math.floor(Math.random() * WORDS_WITH_HINTS.length)];
+    setWord(randomEntry.word);
+    setHint(randomEntry.hint);
     setGuessedLetters(new Set());
     setWrongGuesses(0);
     setGameStatus("playing");
@@ -104,7 +122,11 @@ export const GameScreen = ({ onHomeClick }: GameScreenProps) => {
           </div>
 
           {/* Word Display */}
-          <div className="bg-card p-6 rounded-3xl shadow-lg border-2 border-primary/20 w-full">
+          <div className="bg-card p-6 rounded-3xl shadow-lg border-2 border-primary/20 w-full space-y-4">
+            <div className="text-center">
+              <div className="text-sm font-medium text-muted-foreground mb-2">Hint</div>
+              <div className="text-lg text-foreground">{hint}</div>
+            </div>
             <div className="text-3xl md:text-4xl font-bold text-center tracking-widest text-primary">
               {displayWord}
             </div>
