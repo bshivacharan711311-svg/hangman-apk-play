@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Trophy, XCircle, Home, RotateCcw } from "lucide-react";
+import { Trophy, XCircle, Home, RotateCcw, ArrowRight } from "lucide-react";
 
 interface ResultModalProps {
   isOpen: boolean;
@@ -8,6 +8,7 @@ interface ResultModalProps {
   word: string;
   onPlayAgain: () => void;
   onHome: () => void;
+  onNextLevel?: () => void;
 }
 
 export const ResultModal = ({
@@ -16,6 +17,7 @@ export const ResultModal = ({
   word,
   onPlayAgain,
   onHome,
+  onNextLevel,
 }: ResultModalProps) => {
   const isWin = gameStatus === "won";
 
@@ -59,11 +61,22 @@ export const ResultModal = ({
 
           {/* Buttons */}
           <div className="space-y-3 pt-2">
+            {onNextLevel && isWin && (
+              <Button
+                variant="game"
+                size="lg"
+                onClick={onNextLevel}
+                className="w-full"
+              >
+                Next Level
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            )}
             <Button
-              variant="game"
+              variant={onNextLevel && isWin ? "outline" : "game"}
               size="lg"
               onClick={onPlayAgain}
-              className="w-full"
+              className={`w-full ${onNextLevel && isWin ? 'border-2' : ''}`}
             >
               <RotateCcw className="mr-2 h-5 w-5" />
               Play Again
@@ -75,7 +88,7 @@ export const ResultModal = ({
               className="w-full border-2"
             >
               <Home className="mr-2 h-5 w-5" />
-              Home
+              Back to Levels
             </Button>
           </div>
         </div>
