@@ -4,6 +4,7 @@ import { HangmanSVG } from "./HangmanSVG";
 import { ResultModal } from "./ResultModal";
 import { Home } from "lucide-react";
 import { GROUPS } from "@/data/levels";
+import { useGameProgress } from "@/hooks/useGameProgress";
 
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
@@ -22,6 +23,7 @@ export const GameScreen = ({ groupId, level, onHomeClick, onNextLevel, onBackToL
   const [wrongGuesses, setWrongGuesses] = useState(0);
   const [gameStatus, setGameStatus] = useState<"playing" | "won" | "lost">("playing");
   const [shake, setShake] = useState(false);
+  const { markLevelComplete } = useGameProgress();
 
   const group = GROUPS.find(g => g.id === groupId);
   const currentLevel = group?.levels[level - 1];
@@ -47,11 +49,13 @@ export const GameScreen = ({ groupId, level, onHomeClick, onNextLevel, onBackToL
       
       if (hasWon && gameStatus === "playing") {
         setGameStatus("won");
+        // Mark level as complete
+        markLevelComplete(groupId, level);
       } else if (wrongGuesses >= 6 && gameStatus === "playing") {
         setGameStatus("lost");
       }
     }
-  }, [guessedLetters, wrongGuesses, word, gameStatus]);
+  }, [guessedLetters, wrongGuesses, word, gameStatus, groupId, level, markLevelComplete]);
 
   const handlePlayAgain = () => {
     setGuessedLetters(new Set());

@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { GROUPS } from "@/data/levels";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, CheckCircle2 } from "lucide-react";
+import { useGameProgress } from "@/hooks/useGameProgress";
 
 interface LevelSelectionProps {
   groupId: string;
@@ -10,6 +11,7 @@ interface LevelSelectionProps {
 
 export const LevelSelection = ({ groupId, onSelectLevel, onBack }: LevelSelectionProps) => {
   const group = GROUPS.find(g => g.id === groupId);
+  const { isLevelCompleted } = useGameProgress();
 
   if (!group) return null;
 
@@ -34,22 +36,36 @@ export const LevelSelection = ({ groupId, onSelectLevel, onBack }: LevelSelectio
       {/* Levels Grid */}
       <div className="flex-1 flex items-center justify-center">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 max-w-4xl w-full">
-          {group.levels.map((_, index) => (
-            <Button
-              key={index}
-              variant="outline"
-              size="lg"
-              onClick={() => onSelectLevel(index + 1)}
-              className="h-24 flex flex-col items-center justify-center gap-2 hover:scale-105 transition-transform border-2 border-primary/20 hover:border-primary/50"
-            >
-              <div className="text-2xl font-black text-primary">
-                {index + 1}
-              </div>
-              <div className="text-xs text-muted-foreground">
-                Level
-              </div>
-            </Button>
-          ))}
+          {group.levels.map((_, index) => {
+            const levelNumber = index + 1;
+            const completed = isLevelCompleted(groupId, levelNumber);
+            
+            return (
+              <Button
+                key={index}
+                variant="outline"
+                size="lg"
+                onClick={() => onSelectLevel(levelNumber)}
+                className={`h-24 flex flex-col items-center justify-center gap-2 hover:scale-105 transition-transform border-2 relative ${
+                  completed 
+                    ? 'border-primary/50 bg-primary/10' 
+                    : 'border-primary/20 hover:border-primary/50'
+                }`}
+              >
+                {completed && (
+                  <div className="absolute top-1 right-1">
+                    <CheckCircle2 className="h-4 w-4 text-primary" />
+                  </div>
+                )}
+                <div className="text-2xl font-black text-primary">
+                  {levelNumber}
+                </div>
+                <div className="text-xs text-muted-foreground">
+                  Level
+                </div>
+              </Button>
+            );
+          })}
         </div>
       </div>
     </div>
