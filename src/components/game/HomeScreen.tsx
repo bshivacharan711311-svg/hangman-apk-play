@@ -1,5 +1,6 @@
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Play, Globe } from "lucide-react";
+import { Play, Globe, HelpCircle } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import {
   DropdownMenu,
@@ -7,6 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { TutorialDialog } from "./TutorialDialog";
 
 interface HomeScreenProps {
   onStartGame: () => void;
@@ -14,6 +16,14 @@ interface HomeScreenProps {
 
 export const HomeScreen = ({ onStartGame }: HomeScreenProps) => {
   const { language, setLanguage, t } = useLanguage();
+  const [showTutorial, setShowTutorial] = useState(false);
+
+  useEffect(() => {
+    const tutorialCompleted = localStorage.getItem("hangman_tutorial_completed");
+    if (!tutorialCompleted) {
+      setShowTutorial(true);
+    }
+  }, []);
 
   const languages = [
     { code: "en", name: "English", flag: "🇬🇧" },
@@ -33,8 +43,16 @@ export const HomeScreen = ({ onStartGame }: HomeScreenProps) => {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-secondary/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
       </div>
 
-      {/* Language Selector */}
-      <div className="absolute top-6 right-6">
+      {/* Language Selector & Tutorial Button */}
+      <div className="absolute top-6 right-6 flex gap-2">
+        <Button
+          variant="outline"
+          size="icon"
+          className="rounded-full card-glow"
+          onClick={() => setShowTutorial(true)}
+        >
+          <HelpCircle className="h-5 w-5" />
+        </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="icon" className="rounded-full card-glow">
@@ -55,6 +73,8 @@ export const HomeScreen = ({ onStartGame }: HomeScreenProps) => {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
+
+      <TutorialDialog open={showTutorial} onOpenChange={setShowTutorial} />
 
       <div className="text-center space-y-8 max-w-2xl w-full relative z-10">
         {/* Title with VFX */}
